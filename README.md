@@ -8,7 +8,7 @@
 
 This project implements a **domain-specific RAG pipeline** specialized in European Union law. Given a natural language question, the system retrieves the most semantically relevant legal articles from a curated knowledge base of official EU legislation and generates a precise, source-cited answer using a local language model.
 
-The system is designed with a core principle in mind: **every answer must be grounded in a verifiable legal source**. No hallucinations, no guesswork — only answers anchored in official EUR-Lex documents.
+The system is designed with a core principle in mind: **every answer must be grounded in a verifiable legal source**. No hallucinations or guessing, only answers anchored in official EUR-Lex documents.
 
 ---
 
