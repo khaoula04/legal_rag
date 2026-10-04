@@ -176,7 +176,7 @@ python -c "from rag.ingestion import construire_base; construire_base()"
 python app.py
 ```
 
-Then open `http://localhost:7860` in your browser.
+runs on `http://localhost:7860` in the browser.
 
 ---
 
