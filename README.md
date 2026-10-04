@@ -1,4 +1,4 @@
-# Legal RAG System — EU Law Question Answering
+# Legal RAG System : EU Law Question Answering
 
 > An intelligent legal assistant powered by Retrieval-Augmented Generation (RAG), built on official EUR-Lex documents and running entirely on local infrastructure.
 
@@ -28,7 +28,7 @@ Source  : Article 77 & 79 (Right to lodge a complaint), GDPR — EUR-Lex
 
 ## Why This Project Matters
 
-Legal information is notoriously difficult to navigate. EU regulations run into hundreds of pages of dense legal language. This system makes EU law **accessible to anyone** — no legal background required.
+Legal information is notoriously difficult to navigate. EU regulations run into hundreds of pages of dense legal language. This system makes EU law **accessible to anyone**, no legal background required.
 
 
 
@@ -38,7 +38,7 @@ Legal information is notoriously difficult to navigate. EU regulations run into 
 
 The system is split into two phases:
 
-### Phase 1 — Indexing (run once)
+### Phase 1 : Indexing (run once)
 
 ```
 EUR-Lex PDFs → Article-level chunking → Semantic embeddings → ChromaDB (persistent)
@@ -49,7 +49,7 @@ EUR-Lex PDFs → Article-level chunking → Semantic embeddings → ChromaDB (pe
 3. Each article is encoded into a 384-dimensional semantic vector using `all-MiniLM-L6-v2`
 4. All vectors are stored in ChromaDB with metadata (article number, title, source document)
 
-### Phase 2 — Inference (at every question)
+### Phase 2 : Inference (at every question)
 
 ```
 User question → Embedding → ChromaDB cosine search → Top 3 articles → Phi-3 → Answer + source
@@ -115,28 +115,28 @@ Each file has a single responsibility:
 ## Key Design Decisions
 
 **Why RAG instead of a standalone LLM?**
-A standalone LLM answers from memory and can hallucinate — especially on specific legal details like article numbers or exact obligations. RAG forces the model to read the actual legal text before answering, making every response verifiable.
+A standalone LLM answers from memory and can hallucinate, especially on specific legal details like article numbers or exact obligations. RAG forces the model to read the actual legal text before answering, making every response verifiable.
 
 **Why ChromaDB instead of FAISS?**
 FAISS stores the index in RAM and requires rebuilding on every session. ChromaDB persists to disk and uses cosine similarity, which is better suited for semantic text search than Euclidean distance.
 
 **Why Phi-3 instead of an extractive model like RoBERTa?**
-Extractive models like `roberta-base-squad2` can only find an exact text span — they fail on paraphrased or complex questions. Phi-3 is a generative model that understands the question semantically and formulates a coherent answer even when the wording differs from the source text. Running it locally via Ollama also ensures no data leaves the machine — critical for a system handling legal information.
+Extractive models like `roberta-base-squad2` can only find an exact text span : they fail on paraphrased or complex questions. Phi-3 is a generative model that understands the question semantically and formulates a coherent answer even when the wording differs from the source text. 
 
 **Why EUR-Lex instead of Wikipedia?**
 Wikipedia summarizes and paraphrases legal texts. EUR-Lex publishes the official, legally valid versions. For a legal assistant, citing "Article 5, GDPR — EUR-Lex" is authoritative; citing Wikipedia is not.
 
 **Why article-level chunking instead of fixed token windows?**
-EU legal texts are naturally structured by articles, each covering a specific, self-contained legal concept. Article-level chunking preserves this semantic coherence — a fixed token window would often split an article mid-sentence, losing context and making retrieval less precise.
+EU legal texts are naturally structured by articles, each covering a specific, self-contained legal concept. Article-level chunking preserves this semantic coherence : a fixed token window would often split an article mid-sentence, losing context and making retrieval less precise.
 
 ---
 
 ## Limitations & Future Work
 
 **Current limitations:**
-- Knowledge base covers 5 documents (~150 articles) — does not represent the full body of EU law
-- Phi-3 is a small model (2.2GB) — complex multi-article reasoning may be imprecise
-- No cross-article linking — some answers require reading multiple related articles together
+- Knowledge base covers 5 documents (~150 articles), does not represent the full body of EU law
+- Phi-3 is a small model (2.2GB) : complex multi-article reasoning may be imprecise
+- No cross-article linking, some answers require reading multiple related articles together
 
 **Planned improvements:**
 - Add a reranking step (cross-encoder) to improve passage selection quality before generation
