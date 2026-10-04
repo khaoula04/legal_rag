@@ -150,8 +150,8 @@ EU legal texts are naturally structured by articles, each covering a specific, s
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/rag-juridique.git
-cd rag-juridique
+git clone https://github.com/khaoula04/legal_rag.git
+cd legal_rag
 
 # 2. Install Python dependencies
 pip install -r requirements.txt
